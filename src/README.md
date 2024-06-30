@@ -18,6 +18,10 @@ Logging of activities
 Ticketing in case of failures
 Frontend for user settings
 
+## Customization
+
+If you want to use this yourself, the state/database is currently being stored inside AWS DynamoDB. The access class for that is in `/src/aws/illyriad_db_dao.py`, and it is initialized inside `/src/dagger/aws_module.py`. Run your own version of that file, if youre using your own AWS account, or local db instance.
+
 ## Links
 
 * https://pypi.org/project/boto3-stubs/
