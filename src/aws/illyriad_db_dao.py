@@ -1,12 +1,12 @@
-from injector import inject
+from injector import inject, Annotated
 
 class IllyriadDBDao():
     @inject
-    def __init__(self, dynamodb_res):
+    def __init__(self, metadata_table: Annotated[object, "MetadataTable"], players_table: Annotated[object, "PlayersTable"]):
+        # TODO: Remove the Annotated
         print(f'Initializing {self.__class__.__name__}')
-        self.dynamodb_res = dynamodb_res
-        self.metadata_table = dynamodb_res.Table('Illyriad-Metadata-Dev')
-        self.players_table = dynamodb_res.Table('Illyriad-Notifications-Dev')
+        self.metadata_table = metadata_table
+        self.players_table = players_table
 
     def get_player_refresh_needed(self) -> bool:
         return bool(self.__get_metadata('REFRESH_PLAYERS'))

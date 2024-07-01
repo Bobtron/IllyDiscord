@@ -1,7 +1,9 @@
 from injector import Injector
+from dotenv import load_dotenv
 
 from dagger.aws_module import AWSModule
 from dagger.generic_module import GenericModule
+from dagger.env_module import EnvModule
 from processor.notifications_processsor import NotificationsProcessor
 
 def main():
@@ -23,7 +25,9 @@ def main():
     # playernotification processor has metadatacahe, playercache, illyriad, discord
     # illyriad has a xmlparser
 
-    injector = Injector([AWSModule(), GenericModule()])
+    load_dotenv()
+
+    injector = Injector([AWSModule(), EnvModule(), GenericModule()])
 
     notifications_processor = injector.get(NotificationsProcessor)
 
