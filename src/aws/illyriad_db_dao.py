@@ -5,14 +5,42 @@ class IllyriadDBDao():
     def __init__(self, dynamodb_res):
         print(f'Initializing {self.__class__.__name__}')
         self.dynamodb_res = dynamodb_res
-        self.metadata_table = dynamodb_res.Table('Illyriad-Metadata-Prod')
-        self.players_table = dynamodb_res.Table('Illyriad-Notifications-Prod')
+        self.metadata_table = dynamodb_res.Table('Illyriad-Metadata-Dev')
+        self.players_table = dynamodb_res.Table('Illyriad-Notifications-Dev')
 
     def get_player_refresh_needed(self) -> bool:
         return bool(self.__get_metadata('REFRESH_PLAYERS'))
 
+    def set_players_refreshed(self) -> None:
+        response = self.metadata_table.update_item(
+            Key={
+                'partition_key_name': 'REFRESH_PLAYERS'
+            },
+            UpdateExpression="SET valuestring = :valuestring",
+            ExpressionAttributeValues={
+                ':valuestring': False
+            },
+            ReturnValues="UPDATED_NEW",
+            ReturnConsumedCapacity="NONE",
+        )
+        assert not response['Attributes']['valuestring']
+
     def get_metadata_refresh_needed(self) -> bool:
         return bool(self.__get_metadata('REFRESH_METADATA'))
+
+    def set_metadata_refreshed(self) -> None:
+        response = self.metadata_table.update_item(
+            Key={
+                'partition_key_name': 'REFRESH_METADATA'
+            },
+            UpdateExpression="SET valuestring = :valuestring",
+            ExpressionAttributeValues={
+                ':valuestring': False
+            },
+            ReturnValues="UPDATED_NEW",
+            ReturnConsumedCapacity="NONE",
+        )
+        assert not response['Attributes']['valuestring']
 
     def get_incoming_webhook_url(self) -> str:
         return self.__get_metadata('WAR_INCOMING_WEBHOOK_URL')
@@ -48,5 +76,4 @@ class IllyriadDBDao():
             ReturnValues="UPDATED_NEW",
             ReturnConsumedCapacity="NONE",
         )
-        # print(response)
         assert response['Attributes']['latest_notifications_id'] == latest_notif_id

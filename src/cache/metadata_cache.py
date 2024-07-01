@@ -14,13 +14,16 @@ class MetadataCache(Cache):
         }
 
     def load(self, force: bool = False) -> None:
-        if force or self.refresh_needed():
+        if force or self.get_refresh_needed():
             self.__load_from_dao()
+            self.set_refreshed()
 
-    def refresh_needed(self) -> bool:
+    def set_refreshed(self) -> None:
+        self.illyriad_db_dao.set_metadata_refreshed()
+
+    def get_refresh_needed(self) -> bool:
         return self.illyriad_db_dao.get_metadata_refresh_needed()
 
     def __load_from_dao(self) -> None:
         self.illyriad_towns_url = self.illyriad_db_dao.get_illyriad_towns_url()
         self.channel_to_webhook_url['INCOMING_WEBHOOK_URL'] = self.illyriad_db_dao.get_incoming_webhook_url()
-        # print(self.channel_to_webhook_url)

@@ -28,4 +28,5 @@ class NotificationsProcessor():
             self.metadata_cache.load()
             self.player_cache.load()
 
+            # Remove when running in prod
             break

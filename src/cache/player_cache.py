@@ -13,8 +13,9 @@ class PlayerCache(Cache):
         self.players: List[Player] = []
 
     def load(self, force: bool = False) -> None:
-        if force or self.refresh_needed():
+        if force or self.get_refresh_needed():
             self.__load_from_dao()
+            self.set_refreshed()
 
     def get_players(self) -> List[Player]:
         return self.players
@@ -23,7 +24,10 @@ class PlayerCache(Cache):
         self.illyriad_db_dao.update_player_latest_notif_id(player.player_id, latest_notif_id)
         player.latest_notif_id = latest_notif_id
 
-    def refresh_needed(self) -> bool:
+    def set_refreshed(self) -> None:
+        self.illyriad_db_dao.set_players_refreshed()
+
+    def get_refresh_needed(self) -> bool:
         return self.illyriad_db_dao.get_player_refresh_needed()
 
     def __load_from_dao(self) -> None:

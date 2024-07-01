@@ -9,5 +9,5 @@ class Cache():
     def load(self, force: bool = False) -> None:
         raise NotImplementedError()
 
-    def refresh_needed(self) -> bool:
+    def get_refresh_needed(self) -> bool:
         raise NotImplementedError()
