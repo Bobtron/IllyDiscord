@@ -1,3 +1,2 @@
 injector
 boto3
-boto3-stubs
