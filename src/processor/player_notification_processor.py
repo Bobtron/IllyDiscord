@@ -19,6 +19,8 @@ class PlayerNotificationProcessor():
         ]
 
     def process_player(self, player):
+        print(f'Processing player {player.player_id}')
+
         player_notifications: PlayerNotifications = self.illyriad.get_player_notifications(player)
 
         if player_notifications.is_empty:

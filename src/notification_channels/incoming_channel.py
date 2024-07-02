@@ -30,11 +30,8 @@ class IncomingChannel(NotificationChannel):
 
             notif_detail = f"Hey <@{player.discord_user_id}> - {notif.notificationtype} | {notif_detail}"
 
-            print(notif_detail)
-            
             self.discord.post_message_to_webhook(webhook_url, notif_detail)
 
-        
 
     def filter_notifications(self, notifications_list: List[Notification]) -> List[Notification]:
         return list(filter(self.is_hostile_incoming, notifications_list))

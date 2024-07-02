@@ -49,6 +49,7 @@ class IllyriadDBDao():
         return self.__get_metadata('ILLYRIAD_TOWNS_URL')
 
     def __get_metadata(self, key_name: str) -> str:
+        print(f'Getting metadata value for {key_name}')
         item = self.metadata_table.get_item(
             Key={
                 'partition_key_name': key_name
@@ -58,6 +59,7 @@ class IllyriadDBDao():
         return item['Item']['valuestring']
         
     def scan_players(self):
+        print(f'Scanning players table')
         response = self.players_table.scan(
             Select='ALL_ATTRIBUTES',
             ReturnConsumedCapacity='NONE',
@@ -65,6 +67,7 @@ class IllyriadDBDao():
         return response['Items']
 
     def update_player_latest_notif_id(self, player_id: int, latest_notif_id: int) -> None:
+        print(f'Updating player {player_id} with latest notification id {latest_notif_id}')
         response = self.players_table.update_item(
             Key={
                 'player_id': player_id
