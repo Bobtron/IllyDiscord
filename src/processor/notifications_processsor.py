@@ -27,6 +27,7 @@ class NotificationsProcessor():
 
             for player in players_list:
                 self.player_notification_processor.process_player(player)
+                time.sleep(5)
 
             time_since_last_run = time.time() - last_run_time
             print(f"Notifications Processor completed in {time_since_last_run} seconds")
