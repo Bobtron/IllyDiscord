@@ -32,8 +32,8 @@ class NotificationsProcessor():
 
                 time_since_last_run = time.time() - last_run_time
                 print(f"Notifications Processor completed in {time_since_last_run} seconds")
-                if time_since_last_run < 60:
-                    sleep_time = 60 - time_since_last_run
+                if time_since_last_run < 300:
+                    sleep_time = 300 - time_since_last_run
                     print(f"Sleeping for {sleep_time} seconds")
                     time.sleep(sleep_time)
                 
@@ -41,8 +41,8 @@ class NotificationsProcessor():
                 self.player_cache.load()
             except Exception as e:
                 print(f"[ERROR]: {e}")
-                print(f"Sleeping for 1 minute...")
-                time.sleep(60)
+                print(f"Sleeping for 5 minutes...")
+                time.sleep(300)
 
             # Remove when running in prod
             # break
