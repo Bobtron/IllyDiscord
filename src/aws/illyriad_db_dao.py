@@ -72,11 +72,11 @@ class IllyriadDBDao():
             Key={
                 'player_id': player_id
             },
-            UpdateExpression="SET latest_notifications_id = :latest_notif_id",
+            UpdateExpression="SET last_notification_id = :latest_notif_id",
             ExpressionAttributeValues={
                 ':latest_notif_id': latest_notif_id
             },
             ReturnValues="UPDATED_NEW",
             ReturnConsumedCapacity="NONE",
         )
-        assert response['Attributes']['latest_notifications_id'] == latest_notif_id
+        assert response['Attributes']['last_notification_id'] == latest_notif_id
