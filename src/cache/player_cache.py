@@ -20,7 +20,7 @@ class PlayerCache(Cache):
     def get_players(self) -> List[Player]:
         return self.players
 
-    def update_player_latest_notif_id(self, player: Player, latest_notif_id: int) -> None:
+    def update_player_latest_notif_id(self, player: Player, latest_notif_id: str) -> None:
         self.illyriad_db_dao.update_player_latest_notif_id(player.player_id, latest_notif_id)
         player.latest_notif_id = latest_notif_id
 
@@ -36,6 +36,6 @@ class PlayerCache(Cache):
         self.players = [Player(
             player_id=item['player_id'],
             discord_user_id=item['discord_user_id'],
-            latest_notif_id=item['latest_notifications_id'],
-            notif_api_key=item['notifications_api_key'],
+            latest_notif_id=item['last_notification_id'],
+            notif_api_key=item['notification_api_key'],
             ) for item in items]

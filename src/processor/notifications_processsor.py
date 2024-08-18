@@ -21,23 +21,28 @@ class NotificationsProcessor():
         self.player_cache.load(force=True)
 
         while True:
-            last_run_time = time.time()
-            print(f"Running Notifications Processor for all players at time {last_run_time}")
-            players_list: List[Player] = self.player_cache.get_players()
+            try:
+                last_run_time = time.time()
+                print(f"Running Notifications Processor for all players at time {last_run_time}")
+                players_list: List[Player] = self.player_cache.get_players()
 
-            for player in players_list:
-                self.player_notification_processor.process_player(player)
-                time.sleep(5)
+                for player in players_list:
+                    self.player_notification_processor.process_player(player)
+                    time.sleep(5)
 
-            time_since_last_run = time.time() - last_run_time
-            print(f"Notifications Processor completed in {time_since_last_run} seconds")
-            if time_since_last_run < 60:
-                sleep_time = 60 - time_since_last_run
-                print(f"Sleeping for {sleep_time} seconds")
-                time.sleep(sleep_time)
-            
-            self.metadata_cache.load()
-            self.player_cache.load()
+                time_since_last_run = time.time() - last_run_time
+                print(f"Notifications Processor completed in {time_since_last_run} seconds")
+                if time_since_last_run < 60:
+                    sleep_time = 60 - time_since_last_run
+                    print(f"Sleeping for {sleep_time} seconds")
+                    time.sleep(sleep_time)
+                
+                self.metadata_cache.load()
+                self.player_cache.load()
+            except Exception as e:
+                print(f"[ERROR]: {e}")
+                print(f"Sleeping for 1 minute...")
+                time.sleep(60)
 
             # Remove when running in prod
             # break

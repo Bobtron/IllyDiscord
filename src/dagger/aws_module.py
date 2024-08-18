@@ -35,4 +35,4 @@ class AWSModule(Module):
     @singleton
     @provider
     def provide_players_table(self, dynamodb_res: DynamoDBResource, stage: str) -> PlayersTable:
-        return dynamodb_res.Table(f'Illyriad-Notifications-{stage}')
+        return dynamodb_res.Table(f'Illyriad-Player-{stage}')

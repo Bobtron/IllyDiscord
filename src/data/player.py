@@ -1,6 +1,6 @@
 
 class Player():
-    def __init__(self, player_id: int, discord_user_id: int, latest_notif_id: int, notif_api_key: str):
+    def __init__(self, player_id: str, discord_user_id: str, latest_notif_id: str, notif_api_key: str):
         self.player_id = player_id
         self.discord_user_id = discord_user_id
         self.latest_notif_id = latest_notif_id

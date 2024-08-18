@@ -66,7 +66,7 @@ class IllyriadDBDao():
         )
         return response['Items']
 
-    def update_player_latest_notif_id(self, player_id: int, latest_notif_id: int) -> None:
+    def update_player_latest_notif_id(self, player_id: int, latest_notif_id: str) -> None:
         print(f'Updating player {player_id} with latest notification id {latest_notif_id}')
         response = self.players_table.update_item(
             Key={
@@ -74,7 +74,7 @@ class IllyriadDBDao():
             },
             UpdateExpression="SET latest_notifications_id = :latest_notif_id",
             ExpressionAttributeValues={
-                ':latest_notif_id': int(latest_notif_id)
+                ':latest_notif_id': latest_notif_id
             },
             ReturnValues="UPDATED_NEW",
             ReturnConsumedCapacity="NONE",
